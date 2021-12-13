@@ -14,8 +14,6 @@ const MyIndex = () => {
     const navigate = useNavigate()
 
 
-
-
     return (
 
 
@@ -23,14 +21,14 @@ const MyIndex = () => {
             <Header className="header">
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1"  onClick={() => navigate("/sign-in")}>Sign In</Menu.Item>
-                    <Menu.Item key="2"onClick={() => navigate("/sign-in")}>Random meme</Menu.Item>
-                    <Menu.Item key="3" onClick={() => navigate("/dashboard")}>Zalogowany</Menu.Item>
+                    <Menu.Item key="2"onClick={() => navigate("/random")}>Random meme</Menu.Item>
+                    <Menu.Item key="3" onClick={() => navigate("/index")}>Zalogowany</Menu.Item>
                 </Menu>
             </Header>
             <Layout>
                 <Content>
-                    <Title level={2}>Zalguj się tu kiedyś</Title>
-                    <Button>Loguj</Button>
+                    <Title level={2}>Zaloguj się tu kiedyś</Title>
+                    <Button onClick={() => navigate("/index")}>Loguj</Button>
                 </Content>
                 <Footer/>
             </Layout>

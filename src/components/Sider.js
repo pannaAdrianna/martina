@@ -11,20 +11,27 @@ const {SubMenu} = Menu;
 export default function Sider(props) {
 
     const navigate = useNavigate()
+    const { handleClick } = props;
 
 
     const menuItemsAccount = [
 
         {
-            text: 'Account Info',
+            text: 'Dashboard',
             icon: <UserOutlined color="secondary"/>,
-            path: '/test'
+            path: '/dashboard'
         },
         {
             text: 'Update password',
             icon: <UserOutlined color="secondary"/>,
             path: '/test2'
         },
+        {
+            text: 'Account Info',
+            icon: <UserOutlined color="secondary"/>,
+            path: '/test'
+        },
+
     ];
 
 
@@ -45,7 +52,8 @@ export default function Sider(props) {
                         <Menu.Item
                             button
                             key={item.text}
-                            onClick={() => navigate(item.path)}
+                            onClick={handleClick}
+                            // onClick={() => navigate(item.path)}
                         >{item.icon} {item.text}
 
                         </Menu.Item>
@@ -61,7 +69,7 @@ export default function Sider(props) {
                     title={
                         <span>
               <UserOutlined/>
-              <span>Test</span>
+              <span>Prices</span>
             </span>
                     }
                 >

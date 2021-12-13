@@ -2,9 +2,9 @@ import Layout from "antd/es/layout/layout";
 import Sider from "./Sider";
 import Footer from "../info/Footer";
 import {useState} from "react";
-import Test from "./Test";
-import {UserOutlined} from "@ant-design/icons";
-import {useNavigate} from "react-router";
+import Prices from "./Prices";
+import Test2 from "./Test2";
+import Dashboard from "./Dashboard";
 
 const {Content} = Layout;
 
@@ -19,34 +19,30 @@ const style = {
 
 const MainPage = ({children}) => {
 
-    const navigate = useNavigate()
+    const [render, updateRender] = useState(1);
 
 
-    const menuItemsAccount = [
-        {
-            text: 'Account Info',
-            icon: <UserOutlined color="secondary"/>,
-            path: '/test',
-        },
-        {
-            text: 'Update password',
-            icon: <UserOutlined color="secondary"/>,
-            path: '/test2'
-        },
-    ];
+    const handleMenuClick = menu => {
+        updateRender(menu.key);
 
+    };
 
+    const components = {
+        'Account Info': <><Prices/></>,
+        'Update password': <><Test2/></>,
+        'Dashboard': <><Dashboard/></>,
 
+    };
 
-    return(
-       /* <>
-            <h1>main</h1>
-        </>*/
+    return (
+        /* <>
+             <h1>main</h1>
+         </>*/
 
         <Layout style={{minHeight: "100vh"}}>
-            <Sider />
+            <Sider handleClick={handleMenuClick}/>
             <Layout>
-                <Content> {children}</Content>
+                <Content>{components[render]}</Content>
                 <Footer/>
             </Layout>
         </Layout>

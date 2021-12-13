@@ -1,6 +1,4 @@
-
 import React from "react";
-
 
 
 const Footer = () => {
@@ -9,9 +7,9 @@ const Footer = () => {
     return (
 
         <>
-            {'Copyright © '}
-            Adrianna Boczar{' '}
-            {new Date().getFullYear()}
+            <p>Made with ❤ by Adrianna Boczar for Martyna
+                {' '}
+                {new Date().getFullYear()} </p>
         </>
     )
 
