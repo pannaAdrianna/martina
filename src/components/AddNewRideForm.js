@@ -1,15 +1,8 @@
 import React, {useState} from 'react';
 import {
     Form,
-    Input,
     Button,
-    Radio,
-    Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch, Typography,
+    Select, Typography,
 } from 'antd';
 
 const {Title} = Typography;

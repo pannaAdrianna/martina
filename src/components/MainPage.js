@@ -28,16 +28,13 @@ const MainPage = ({children}) => {
     };
 
     const components = {
-        'Account Info': <><Prices/></>,
-        'Update password': <><Test2/></>,
-        'Dashboard': <><Dashboard/></>,
+        'Account Info': <Prices/>,
+        'Update password': <Test2/>,
+        'Dashboard': <Dashboard/>,
 
     };
 
     return (
-        /* <>
-             <h1>main</h1>
-         </>*/
 
         <Layout style={{minHeight: "100vh"}}>
             <Sider handleClick={handleMenuClick}/>

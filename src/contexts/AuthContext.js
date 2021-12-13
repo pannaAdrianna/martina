@@ -1,8 +1,10 @@
 // kontekst dla aplikacji, AUTHENTICATION
 
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import {auth} from '../Firebase';
 
+
+import {createContext, useContext, useEffect, useState} from "react";
+import {auth} from "../Firebase";
+import React from "react";
 const AuthContext = createContext();
 
 export function useAuth() {

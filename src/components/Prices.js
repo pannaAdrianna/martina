@@ -1,5 +1,4 @@
 import {Button, Card, Form, InputNumber, Layout, Space} from "antd";
-import {Link} from "react-router-dom";
 import {Content} from "antd/es/layout/layout";
 import {useEffect, useState} from "react";
 
