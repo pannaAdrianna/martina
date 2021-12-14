@@ -42,40 +42,81 @@ const RideForm = () => {
     };
 
     const onFill = () => {
-        form.setFieldsValue({
-            total: '0',
-        });
+        // form.setFieldsValue({
+        //     total: '0',
+        // });
     };
 
 
     const onRideTypeChange = (value) => {
+        // eslint-disable-next-line default-case
         switch (value) {
 
             case 'ind':
                 form.setFieldsValue({
-                    price: '90',
+                    price: 90,
+
+                });
+                form.setFieldsValue({
+                    total: form.getFieldValue('price')
+
                 });
                 return;
+
 
             case 'doubleInd':
                 form.setFieldsValue({
-                    price: '80',
+                    price: 80,
+                    // total: (parseInt(form.getFieldValue('price')) * 2)
+                });
+                form.setFieldsValue({
+                    total: form.getFieldValue('price')*2
+
                 });
                 return;
+
+
             case 'lunge':
                 form.setFieldsValue({
-                    price: '50',
+                    price: 50,
+                    // total: (form.getFieldValue('price'))
+                });
+                form.setFieldsValue({
+                    total: form.getFieldValue('price')
+
                 });
                 return;
+
 
             case 'unit':
                 form.setFieldsValue({
-                    price: '50',
+                    price: 50,
+                    // total: ((form.getFieldValue('customizeUnit')) * (form.getFieldValue('price')))
+
                 });
+                form.setFieldsValue({
+                    total: (3 * (form.getFieldValue('price')))
+                    // total: ((form.getFieldValue('customizeUnit')) * (form.getFieldValue('price')))
+                });
+
+
+
                 return;
+            // updateTotal()
+
+
         }
+
+
+
     };
 
+
+    function updateTotal() {
+        form.setFieldsValue({
+            total: ((form.getFieldValue('customizeUnit')) * (form.getFieldValue('price')))
+        })
+    }
 
     return (
 
@@ -86,6 +127,7 @@ const RideForm = () => {
                 label="Price"
                 rules={[
                     {
+                        type: 'number',
                         required: true,
                     },
                 ]}
@@ -113,6 +155,18 @@ const RideForm = () => {
                 </Select>
             </Form.Item>
             <Form.Item
+                name="total"
+                label="Total"
+                rules={[
+                    {
+                        type: "number",
+                        required: true,
+                    },
+                ]}
+            >
+                <Input readOnly="true" style={{background: 'lightgrey'}}/>
+            </Form.Item>
+            <Form.Item
                 noStyle
                 shouldUpdate={(prevValues, currentValues) => prevValues.customizeUnit !== currentValues.customizeUnit}
             >
@@ -130,7 +184,7 @@ const RideForm = () => {
                                 },
                             ]}
                         >
-                            <InputNumber/>
+                            <InputNumber onChange={updateTotal}/>
                         </Form.Item>
                     ) : null
                 }
