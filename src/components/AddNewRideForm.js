@@ -7,6 +7,7 @@ import {
 import {InputNumber} from "antd/es";
 import {Option} from "antd/es/mentions";
 import Text from "antd/es/typography/Text";
+import firebase from "firebase/compat";
 
 const {Title} = Typography;
 
@@ -28,12 +29,18 @@ const tailLayout = {
 
 const RideForm = () => {
 
+    const [total, setTotal] = useState(0)
     const [form] = Form.useForm();
+
+    const ref = firebase.firestore().collection('rides');
+
 
     const onFinish = (values) => {
         console.log(values);
 
         // tu dodaj wysyłanie gdzieś -> chyba na serwer
+        setTotal(form.getFieldValue('total'))
+
         form.resetFields();
     };
 
@@ -41,11 +48,6 @@ const RideForm = () => {
         form.resetFields();
     };
 
-    const onFill = () => {
-        // form.setFieldsValue({
-        //     total: '0',
-        // });
-    };
 
 
     const onRideTypeChange = (value) => {
@@ -70,7 +72,7 @@ const RideForm = () => {
                     // total: (parseInt(form.getFieldValue('price')) * 2)
                 });
                 form.setFieldsValue({
-                    total: form.getFieldValue('price')*2
+                    total: form.getFieldValue('price') * 2
 
                 });
                 return;
@@ -99,14 +101,11 @@ const RideForm = () => {
                     // total: ((form.getFieldValue('customizeUnit')) * (form.getFieldValue('price')))
                 });
 
-
-
                 return;
             // updateTotal()
 
 
         }
-
 
 
     };
@@ -191,13 +190,10 @@ const RideForm = () => {
             </Form.Item>
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Dodaj
                 </Button>
                 <Button htmlType="button" onClick={onReset}>
                     Reset
-                </Button>
-                <Button type="link" htmlType="button" onClick={onFill}>
-                    Fill form
                 </Button>
             </Form.Item>
         </Form>

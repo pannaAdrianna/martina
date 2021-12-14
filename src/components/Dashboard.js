@@ -2,6 +2,7 @@ import {Card, Form, Layout, Space, Switch, Typography} from "antd";
 import {Content} from "antd/es/layout/layout";
 import React, {useEffect, useState} from "react";
 import RideForm from "./AddNewRideForm";
+import {KidForm} from "./AddNewKidForm";
 
 
 const {Title} = Typography;
@@ -23,6 +24,13 @@ const Dashboard = () => {
         setDate(new Date().toLocaleDateString())
     }, [])
 
+
+
+    function handleTotal(){
+
+
+    }
+
     return (
         <Layout>
             <Content style={{span: 10}}>
@@ -43,6 +51,9 @@ const Dashboard = () => {
                             <li>{name}: {my} zł</li>
                         </ul>
 
+                    </Card>
+                    <Card title="Dodaj dziecko" bordered={false} style={{width: 300}}>
+                        <KidForm/>
                     </Card>
 
                     <Card title="Dodaj nową jazdę" bordered={false} style={{width: 600}}>
