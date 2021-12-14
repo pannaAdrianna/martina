@@ -1,6 +1,6 @@
 import {Alert, Button, Card, Form, Input, Space} from "antd";
 import firebase from "firebase/compat";
-import {useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 import Title from "antd/es/typography/Title";
 import Search from "antd/es/input/Search";
@@ -31,6 +31,7 @@ export const KidFinder = () => {
     const [patients, setPatients] = useState([]);
     const ref = firebase.firestore().collection('kids');
     const [filtered, setFiltered] = useState([])
+    const [idKid, setIdKid] = useState('initial')
 
 
     useEffect(() => {
@@ -46,7 +47,11 @@ export const KidFinder = () => {
         setFiltered(patients.filter((row) => {
             return row.name.toLowerCase().includes(value.toLowerCase());
         }));
+    }
 
+
+    const parentToChild = () => {
+        setIdKid("diffrentID");
 
     }
 
@@ -80,6 +85,7 @@ export const KidFinder = () => {
             {/*<Title level={5}>Items length: {patients.length}</Title>*/}
             <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 200}}/>
             <RidersTable data={filtered}/>
+            ID kID Kid finder: {idKid}
             {/* eslint-disable-next-line array-callback-return */}
 
 

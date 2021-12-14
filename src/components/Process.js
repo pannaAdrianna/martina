@@ -10,32 +10,36 @@ import {UserOutlined} from "@ant-design/icons";
 
 const {Step} = Steps;
 
-const steps = [
-    {
-        title: 'Wybierz jeźdźca',
-        icon: <UserOutlined/>,
-        content: <KidFinder/>,
-    },
-    {
-        title: 'Wybierz typ jazdy',
-        icon: <UserOutlined/>,
-        content: <AddNewRideForm/>,
-    },
-    {
-        title: 'Podsumowanie',
-        icon: <UserOutlined/>,
-        content: 'Tu wyświetlić',
-    },
-    {
-        title: 'Koniec',
-        icon: <UserOutlined/>,
-        content: 'Last-content',
-    },
-];
 
 const Process = () => {
 
     const [current, setCurrent] = useState(0);
+    const [id, setId] = useState('')
+
+
+    const steps = [
+        {
+            title: 'Wybierz jeźdźca',
+            icon: <UserOutlined/>,
+            content: <KidFinder idKid={(value)=>{setId(value)}}/>,
+        },
+        {
+            title: 'Wybierz typ jazdy',
+            icon: <UserOutlined/>,
+            content: <AddNewRideForm/>,
+        },
+        {
+            title: 'Podsumowanie',
+            icon: <UserOutlined/>,
+            content: 'Tu wyświetlić',
+        },
+        {
+            title: 'Koniec',
+            icon: <UserOutlined/>,
+            content: 'Last-content',
+        },
+    ];
+
 
     const next = () => {
         setCurrent(current + 1);
@@ -44,6 +48,7 @@ const Process = () => {
     const prev = () => {
         setCurrent(current - 1);
     };
+
 
 
     return (

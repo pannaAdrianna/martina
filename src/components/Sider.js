@@ -29,7 +29,7 @@ export default function Sider(props) {
             path: '/dashboard'
         },
         {
-            text: 'Add rider',
+            text: 'Start process',
             icon: <PlusCircleOutlined color="secondary"/>,
             // path: '/test2'
         },

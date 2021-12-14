@@ -29,7 +29,7 @@ const MainPage = ({children}) => {
 
     const components = {
         'Prices': <Prices/>,
-        'Add rider': <Process/>,
+        'Start process': <Process/>,
         'Dashboard': <Dashboard/>,
 
     };

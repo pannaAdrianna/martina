@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Table, Radio, Divider } from 'antd';
+import {Table, Radio, Divider} from 'antd';
 
 import PropTypes from "prop-types";
 
@@ -22,28 +22,22 @@ const columns = [
 ];
 
 
-
-const RidersTable = (props) => {
-    const[selectedID, setSelectedID]=useState()
+function RidersTable(props) {
+    const [selectedID, setSelectedID] = useState()
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelectedID(selectedRowKeys)
         }
-
-
     };
 
     useEffect(() => {
         document.title = `Riders Table`
     }, [])
 
-
     return (
         <div>
-
-
             <Table
                 rowSelection={{
                     type: 'radio',
@@ -57,6 +51,6 @@ const RidersTable = (props) => {
 };
 
 RidersTable.propTypes = {
-data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired
 }
 export default RidersTable;
