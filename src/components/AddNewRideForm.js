@@ -32,6 +32,9 @@ const RideForm = () => {
 
     const onFinish = (values) => {
         console.log(values);
+
+        // tu dodaj wysyłanie gdzieś -> chyba na serwer
+        form.resetFields();
     };
 
     const onReset = () => {
