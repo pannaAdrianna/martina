@@ -16,6 +16,7 @@ const Dashboard = () => {
     const [total, setTotal] = useState(0)
     const [boss, setBoss] = useState(0)
     const [my, setMy] = useState(0)
+    const [kid, setKid] = useState(0)
 
 
     useEffect(() => {
@@ -26,9 +27,15 @@ const Dashboard = () => {
     }, [])
 
 
+    function handleTotal() {
 
-    function handleTotal(){
 
+    }
+
+    function handleKid(value) {
+        console.log('Dashboard')
+        console.log('Dashboard ID kid chosen fT: ',value)
+        setKid(value)
 
     }
 
@@ -62,8 +69,9 @@ const Dashboard = () => {
                     </Card>
 
                     <Card title="Wybierz dziecko" bordered={false} style={{width: 600}}>
-                        <KidFinder/>
+                        <KidFinder selectedID={handleKid}/>
                     </Card>
+                    Kid: {kid}
                 </Space>
 
 

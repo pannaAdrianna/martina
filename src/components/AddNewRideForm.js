@@ -121,18 +121,7 @@ const RideForm = () => {
 
         <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
 
-            <Form.Item
-                name="price"
-                label="Price"
-                rules={[
-                    {
-                        type: 'number',
-                        required: true,
-                    },
-                ]}
-            >
-                <Input readOnly="true" style={{background: 'lightgrey'}}/>
-            </Form.Item>
+
             <Form.Item
                 name="lungeType"
                 label="Typ jazdy"
@@ -154,17 +143,18 @@ const RideForm = () => {
                 </Select>
             </Form.Item>
             <Form.Item
-                name="total"
-                label="Total"
+                name="price"
+                label="Cena"
                 rules={[
                     {
-                        type: "number",
+                        type: 'number',
                         required: true,
                     },
                 ]}
             >
                 <Input readOnly="true" style={{background: 'lightgrey'}}/>
             </Form.Item>
+
             <Form.Item
                 noStyle
                 shouldUpdate={(prevValues, currentValues) => prevValues.customizeUnit !== currentValues.customizeUnit}
@@ -187,6 +177,18 @@ const RideForm = () => {
                         </Form.Item>
                     ) : null
                 }
+            </Form.Item>
+            <Form.Item
+                name="total"
+                label="Całościowo:"
+                rules={[
+                    {
+                        type: "number",
+                        required: true,
+                    },
+                ]}
+            >
+                <Input readOnly="true" style={{background: 'lightgrey'}}/>
             </Form.Item>
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">

@@ -1,6 +1,13 @@
 import React from "react";
 import {Menu, Layout, Icon, Button, Image} from "antd";
-import {LogoutOutlined, MailFilled, MedicineBoxFilled, PoundCircleOutlined, UserOutlined} from "@ant-design/icons";
+import {
+    LogoutOutlined,
+    MailFilled,
+    MedicineBoxFilled,
+    PlusCircleOutlined,
+    PoundCircleOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 
 
 import {useNavigate} from "react-router";
@@ -22,8 +29,8 @@ export default function Sider(props) {
             path: '/dashboard'
         },
         {
-            text: 'Update password',
-            icon: <UserOutlined color="secondary"/>,
+            text: 'Add rider',
+            icon: <PlusCircleOutlined color="secondary"/>,
             // path: '/test2'
         },
         {

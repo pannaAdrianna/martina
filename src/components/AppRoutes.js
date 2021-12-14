@@ -1,7 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import MainPage from "./MainPage";
 import Prices from "./Prices";
-import Test2 from "./Test2";
+import Process from "./Process";
 import MyIndex from "./MyIndex";
 import Random from "./Random";
 import Dashboard from "./Dashboard";
@@ -31,7 +31,7 @@ export const AppRoutes = () => {
 
             {/*   nested */}
             <Route path="/test" element={<Prices/>}>
-                <Route path="1" element={<Test2/>}/>
+                <Route path="1" element={<Process/>}/>
             </Route>
 
 {/*

@@ -21,15 +21,19 @@ const columns = [
 
 ];
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    }
-};
+
 
 const RidersTable = (props) => {
+    const[selectedID, setSelectedID]=useState()
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setSelectedID(selectedRowKeys)
+        }
 
 
+    };
 
     useEffect(() => {
         document.title = `Riders Table`

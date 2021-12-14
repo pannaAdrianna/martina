@@ -43,7 +43,6 @@ export const KidFinder = () => {
 
     const onSearch = value => {
         getAllPatients()
-        console.log(value);
         setFiltered(patients.filter((row) => {
             return row.name.toLowerCase().includes(value.toLowerCase());
         }));
@@ -79,7 +78,7 @@ export const KidFinder = () => {
     return (
         <>
             {/*<Title level={5}>Items length: {patients.length}</Title>*/}
-            <Search placeholder="Find Kid" onSearch={onSearch} style={{width: 200}}/>
+            <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 200}}/>
             <RidersTable data={filtered}/>
             {/* eslint-disable-next-line array-callback-return */}
 

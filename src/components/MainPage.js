@@ -3,7 +3,7 @@ import Sider from "./Sider";
 import Footer from "../info/Footer";
 import {useState} from "react";
 import Prices from "./Prices";
-import Test2 from "./Test2";
+import Process from "./Process";
 import Dashboard from "./Dashboard";
 
 const {Content} = Layout;
@@ -29,7 +29,7 @@ const MainPage = ({children}) => {
 
     const components = {
         'Prices': <Prices/>,
-        'Update password': <Test2/>,
+        'Add rider': <Process/>,
         'Dashboard': <Dashboard/>,
 
     };
