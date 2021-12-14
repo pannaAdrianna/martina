@@ -1,6 +1,6 @@
 import React from "react";
 import {Menu, Layout, Icon, Button, Image} from "antd";
-import {LogoutOutlined, MailFilled, MedicineBoxFilled, UserOutlined} from "@ant-design/icons";
+import {LogoutOutlined, MailFilled, MedicineBoxFilled, PoundCircleOutlined, UserOutlined} from "@ant-design/icons";
 
 
 import {useNavigate} from "react-router";
@@ -11,7 +11,7 @@ const {SubMenu} = Menu;
 export default function Sider(props) {
 
     const navigate = useNavigate()
-    const { handleClick } = props;
+    const {handleClick} = props;
 
 
     const menuItemsAccount = [
@@ -24,12 +24,12 @@ export default function Sider(props) {
         {
             text: 'Update password',
             icon: <UserOutlined color="secondary"/>,
-            path: '/test2'
+            // path: '/test2'
         },
         {
-            text: 'Account Info',
-            icon: <UserOutlined color="secondary"/>,
-            path: '/test'
+            text: 'Prices',
+            icon: <PoundCircleOutlined color="secondary"/>,
+            // path: '/pri'
         },
 
     ];

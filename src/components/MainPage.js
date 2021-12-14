@@ -19,7 +19,7 @@ const style = {
 
 const MainPage = ({children}) => {
 
-    const [render, updateRender] = useState(1);
+    const [render, updateRender] = useState('Dashboard');
 
 
     const handleMenuClick = menu => {
@@ -28,7 +28,7 @@ const MainPage = ({children}) => {
     };
 
     const components = {
-        'Account Info': <Prices/>,
+        'Prices': <Prices/>,
         'Update password': <Test2/>,
         'Dashboard': <Dashboard/>,
 
@@ -40,7 +40,6 @@ const MainPage = ({children}) => {
             <Sider handleClick={handleMenuClick}/>
             <Layout>
                 <Content>{components[render]}</Content>
-                <Footer/>
             </Layout>
         </Layout>
     )

@@ -9,6 +9,8 @@ import Dashboard from "./Dashboard";
 import SignIn from "../auth/SignIn";
 import {PrivateRoute} from "../auth/PrivateRoute";
 import {AuthProvider} from "../contexts/AuthContext";
+import SignUp from "../auth/SignUp";
+import {Fragment} from "react";
 
 
 export const AppRoutes = () => {
@@ -16,20 +18,15 @@ export const AppRoutes = () => {
 
     return (
 
-
         <Routes>
 
             {/*info*/}
             <Route exact path='/' element={<MyIndex/>}/>
+            <Route exact path='/index' element={<MyIndex/>}/>
 
             <Route exact path='/dashboard' element={<Dashboard/>}/>
             <Route exact path='/random' element={<Random/>}/>
-
-                <Route exact path='/sign-in' element={<SignIn/>}/>
-
-                <Route exact path='/index' element={<PrivateRoute/>}>
-                    <Route exact path='/index' element={<MainPage/>}/>
-                </Route>
+            <Route exact path='/main' element={<MainPage/>}/>
 
 
             {/*   nested */}
@@ -37,7 +34,17 @@ export const AppRoutes = () => {
                 <Route path="1" element={<Test2/>}/>
             </Route>
 
+{/*
+
+            <Route exact path='/sign-in' element={<SignIn/>}/>
+            <Route exact path='/sign-up' element={<SignUp/>}/>
+*/}
+
+
+
+
         </Routes>
+
 
     )
 }

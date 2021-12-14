@@ -2,45 +2,150 @@ import React, {useState} from 'react';
 import {
     Form,
     Button,
-    Select, Typography,
+    Select, Typography, Input,
 } from 'antd';
+import {InputNumber} from "antd/es";
+import {Option} from "antd/es/mentions";
+import Text from "antd/es/typography/Text";
 
 const {Title} = Typography;
 
-const RideForm = () => {
-    const [componentSize, setComponentSize] = useState('default');
 
-    const [price, setPrice] = useState(0)
+const layout = {
+    labelCol: {
+        span: 8,
+    },
+    wrapperCol: {
+        span: 16,
+    },
+};
+const tailLayout = {
+    wrapperCol: {
+        offset: 8,
+        span: 16,
+    },
+};
+
+const RideForm = () => {
+
+    const [form] = Form.useForm();
+
+    const onFinish = (values) => {
+        console.log(values);
+    };
+
+    const onReset = () => {
+        form.resetFields();
+    };
+
+    const onFill = () => {
+        form.setFieldsValue({
+            total: '0',
+        });
+    };
+
+
+    const onRideTypeChange = (value) => {
+        switch (value) {
+
+            case 'ind':
+                form.setFieldsValue({
+                    price: '90',
+                });
+                return;
+
+            case 'doubleInd':
+                form.setFieldsValue({
+                    price: '80',
+                });
+                return;
+            case 'lunge':
+                form.setFieldsValue({
+                    price: '50',
+                });
+                return;
+
+            case 'unit':
+                form.setFieldsValue({
+                    price: '50',
+                });
+                return;
+        }
+    };
 
 
     return (
-        <Form
-            labelCol={{
-                span: 4,
-            }}
-            wrapperCol={{
-                span: 14,
-            }}
-            layout="horizontal"
-            initialValues={{
-                size: componentSize,
-            }}
-            size="default"
-        >
 
-            <Form.Item label="Jazda">
-                <Select>
-                    <Select.Option value="ind">Indywidualna</Select.Option>
-                    <Select.Option value="2ind">Podwójna indywidualna</Select.Option>
-                    <Select.Option value="lon">Lonża</Select.Option>
-                    <Select.Option value="zas">Zastęp</Select.Option>
+        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+
+            <Form.Item
+                name="price"
+                label="Price"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input readOnly="true" style={{background: 'lightgrey'}}/>
+            </Form.Item>
+            <Form.Item
+                name="lungeType"
+                label="Typ jazdy"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select
+                    placeholder="Select a option and change input text above"
+                    onChange={onRideTypeChange}
+                    allowClear
+                >
+                    <Option value="ind">Indywidualna</Option>
+                    <Option value="doubleInd">Podwójna jazda</Option>
+                    <Option value="lunge">Lonża</Option>
+                    <Option value="unit">Zastęp</Option>
                 </Select>
             </Form.Item>
-            <Title level={5}>Cena: {price} zł</Title>
-            <Form.Item label="Button">
-                <Button>Button</Button>
+            <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) => prevValues.customizeUnit !== currentValues.customizeUnit}
+            >
+                {({getFieldValue}) =>
+                    getFieldValue('lungeType') === 'unit' ? (
+                        <Form.Item
+                            name="customizeUnit"
+                            label="Ilość osób w zastępie"
+                            initialValue={3}
+                            rules={[
+                                {
+                                    type: "number",
+                                    min: 3,
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <InputNumber/>
+                        </Form.Item>
+                    ) : null
+                }
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+                <Button htmlType="button" onClick={onReset}>
+                    Reset
+                </Button>
+                <Button type="link" htmlType="button" onClick={onFill}>
+                    Fill form
+                </Button>
             </Form.Item>
         </Form>
+
+
     );
 };
 export default RideForm;

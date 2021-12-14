@@ -36,8 +36,10 @@ const SignIn = () => {
             // go to dashboard
             navigate("/index");
 
-        } catch {
+        } catch (e) {
             setError("Failed to log in!")
+            console.log("error", e)
+
         }
 
         setLoading(false);
@@ -46,48 +48,49 @@ const SignIn = () => {
 
 
     return (
-        <Layout>
-            <Content style={{span: 10}}>
-                <Space direction="vertical">
 
-                    <Title level={1}>
-                        Sign in
-                    </Title>
-                    {error && <Alert variant="error">{error}</Alert>}
-                    <Form noValidate onSubmit={handleSubmit}>
-                        <Form.Item>
-                            <Input addonBefore="Email" inputRef={emailRef} id="email"
-                                   label="Email Address"
-                                   name="email"
-                                   autoComplete="email"
-                                   autoFocus required/>
-                        </Form.Item>
-                        <Form.Item>
-                            <Input addonBefore="Password" inputRef={passwordRef}
-                                   name="password"
-                                   label="Password"
-                                   type="password"
-                                   id="password"
-                                   autoComplete="current-password"
-                                   autoFocus required/>
-                        </Form.Item>
-                        <Form.Item>
-                            <Button
-                                disabled={loading}
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSubmit}
-                            >
-                                Sign In
-                            </Button>
-                        </Form.Item>
+        <Space direction="vertical">
 
-                    </Form>
-                </Space>
-            </Content>
-        </Layout>
+            <Title level={1}>
+                Sign in
+            </Title>
+            {error && <Alert variant="error">{error}</Alert>}
+            <Form noValidate onSubmit={handleSubmit}>
+                <Form.Item>
+                    <Input addonBefore="Email" inputref={emailRef} id="email"
+                           label="Email Address"
+                           name="email"
+                           autoComplete="email"
+                           autoFocus required/>
+                </Form.Item>
+                <Form.Item>
+                    <Input addonBefore="Password" inputref={passwordRef}
+                           name="password"
+                           label="Password"
+                           type="password"
+                           id="password"
+                           autoComplete="current-password"
+                           autoFocus required/>
+                </Form.Item>
+                <Form.Item>
+                    <Button
+                        disabled={loading}
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                    >
+                        Sign In
+                    </Button>
+                </Form.Item>
+            </Form>
+            <p>
+                <Link to="/sign-up">
+                    Set Up an account
+                </Link>
+            </p>
+        </Space>
+
     )
 };
 
