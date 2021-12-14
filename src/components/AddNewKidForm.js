@@ -42,7 +42,7 @@ export const KidForm = () => {
             .catch((err) => {
                 console.error(err);
             });
-        setSuccess(`Kid  ${kid.name} ${kid.surname} added to database`)
+        setSuccess(`Dodano  ${kid.name} ${kid.surname} do bazy danych`)
         clearForm();
 
     }
@@ -57,7 +57,7 @@ export const KidForm = () => {
 
             // const added = currentUser ? currentUser.uid : 'unknown';
             const added = 'instructor1';
-            const instructor = 'instructor1';
+            const instructorRef = 'instructor1';
 
             let name = form.getFieldValue('name')
             // let surname=form.getFieldValue('surname')
@@ -65,15 +65,16 @@ export const KidForm = () => {
             let phone = '666666666'
 
             let kids_rides = []
-
+            let t=uuidv4()
 
             const newKid = {
                 name,
                 surname,
                 phone,
-                id: uuidv4(),
-                added: firebase.firestore().collection(`instructors`).doc(`${instructor}`),
-                instructor: firebase.firestore().collection(`instructors`).doc(`${instructor}`),
+                id: t,
+                key: t,
+                added: instructorRef,
+                instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
                 kids_rides,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 lastUpdate: firebase.firestore.FieldValue.serverTimestamp()

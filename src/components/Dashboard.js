@@ -3,6 +3,7 @@ import {Content} from "antd/es/layout/layout";
 import React, {useEffect, useState} from "react";
 import RideForm from "./AddNewRideForm";
 import {KidForm} from "./AddNewKidForm";
+import {KidFinder} from "./KidFinder";
 
 
 const {Title} = Typography;
@@ -58,6 +59,10 @@ const Dashboard = () => {
 
                     <Card title="Dodaj nową jazdę" bordered={false} style={{width: 600}}>
                         <RideForm/>
+                    </Card>
+
+                    <Card title="Wybierz dziecko" bordered={false} style={{width: 600}}>
+                        <KidFinder/>
                     </Card>
                 </Space>
 
