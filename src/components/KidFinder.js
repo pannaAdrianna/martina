@@ -22,7 +22,7 @@ const tailLayout = {
     },
 };
 
-export const KidFinder = () => {
+export const KidFinder = ({parentCallback}) => {
 
 
     const [error, setError] = useState('');
@@ -31,7 +31,7 @@ export const KidFinder = () => {
     const [patients, setPatients] = useState([]);
     const ref = firebase.firestore().collection('kids');
     const [filtered, setFiltered] = useState([])
-    const [idKid, setIdKid] = useState('initial')
+    const [idKid, setIdKid] = useState('')
 
 
     useEffect(() => {
@@ -50,16 +50,9 @@ export const KidFinder = () => {
     }
 
 
-    const parentToChild = () => {
-        setIdKid("diffrentID");
-
-    }
-
     function getAllPatients() {
         setLoading(true);
         let instructorId = 'instructor1'
-
-
         ref
             .where('added', '==', instructorId)
             // .where('tests','array-contains',1)
@@ -79,13 +72,20 @@ export const KidFinder = () => {
         console.log(patients.length)
     }
 
+    const callback = (id) => {
+        setIdKid(id);
+        parentCallback(id)
+
+    }
+
 
     return (
         <>
             {/*<Title level={5}>Items length: {patients.length}</Title>*/}
+            <span>  Choosen rider: {idKid}</span>
             <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 200}}/>
-            <RidersTable data={filtered}/>
-            ID kID Kid finder: {idKid}
+            <RidersTable data={filtered} parentCallback={callback}/>
+
             {/* eslint-disable-next-line array-callback-return */}
 
 

@@ -22,15 +22,14 @@ const columns = [
 ];
 
 
-function RidersTable(props) {
-    const [selectedID, setSelectedID] = useState()
-
+function RidersTable({parentCallback,data}) {
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            setSelectedID(selectedRowKeys)
+            parentCallback(selectedRowKeys)
         }
     };
+
 
     useEffect(() => {
         document.title = `Riders Table`
@@ -42,10 +41,12 @@ function RidersTable(props) {
                 rowSelection={{
                     type: 'radio',
                     ...rowSelection,
-                }}
+                }
+                }
                 columns={columns}
-                dataSource={props.data}
+                dataSource={data}
             />
+
         </div>
     );
 };

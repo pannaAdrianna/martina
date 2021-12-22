@@ -1,5 +1,5 @@
 import Layout, {Content} from "antd/es/layout/layout";
-import {Space} from "antd";
+import {Card, Space} from "antd";
 
 
 import {Steps, Button, message} from 'antd';
@@ -15,18 +15,25 @@ const Process = () => {
 
     const [current, setCurrent] = useState(0);
     const [id, setId] = useState('')
+    const [tempStat, setStat] = useState(false)
 
+    const callback = (idKid) => {
+        // do something with value in parent component, like save to state
+        setId(idKid)
+    }
 
     const steps = [
         {
             title: 'Wybierz jeźdźca',
             icon: <UserOutlined/>,
-            content: <KidFinder idKid={(value)=>{setId(value)}}/>,
+            content: <KidFinder parentCallback={callback}/>,
         },
         {
             title: 'Wybierz typ jazdy',
             icon: <UserOutlined/>,
-            content: <AddNewRideForm/>,
+            content:
+                <AddNewRideForm/>
+            ,
         },
         {
             title: 'Podsumowanie',
@@ -50,25 +57,34 @@ const Process = () => {
     };
 
 
-
     return (
         <Layout>
             <Content style={{span: 10}}>
                 <Space direction="vertical">
-
+                    <span>Process Id: {id}</span>
                     <Steps current={current}>
                         {steps.map(item => (
                             <Step key={item.title} title={item.title}/>
                         ))}
                     </Steps>
                     <Layout style={{minHeight: "100vh"}}>
+
+
                         <Content style={{span: 40}}>
-                            <div className="steps-content">{steps[current].content}</div>
+                            <Card>
+                                <div className="steps-content">{steps[current].content}</div>
+                            </Card>
                             <div className="steps-action">
                                 {current < steps.length - 1 && (
-                                    <Button type="primary" onClick={() => next()}>
-                                        Next
-                                    </Button>
+                                    id.length>0 ?
+
+                                        <Button type="primary" onClick={() => next()}>
+                                            Next
+                                        </Button>
+                                        :
+                                        <span>No
+                                        </span>
+
                                 )}
                                 {current === steps.length - 1 && (
                                     <Button type="primary" onClick={() => message.success('Processing complete!')}>
@@ -82,6 +98,7 @@ const Process = () => {
                                 )}
                             </div>
                         </Content>
+
                     </Layout>
 
 
