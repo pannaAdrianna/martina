@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Form,
     Button,
@@ -9,6 +9,7 @@ import {Option} from "antd/es/mentions";
 import Text from "antd/es/typography/Text";
 import firebase from "firebase/compat";
 import {v4 as uuidv4} from "uuid";
+import RidersTable from "./RidersTable";
 
 const {Title} = Typography;
 
@@ -28,7 +29,7 @@ const tailLayout = {
     },
 };
 
-const RideForm = data => {
+const AddNewRideForm = ({parentCallback}) => {
 
     const [total, setTotal] = useState(0)
     const [form] = Form.useForm();
@@ -40,19 +41,17 @@ const RideForm = data => {
 
     const onFinish = (values) => {
         console.log(values);
-
         // tu dodaj wysyłanie gdzieś -> chyba na serwer
         setTotal(form.getFieldValue('total'))
-
-
         // tu na serwer
-
         form.resetFields();
     };
 
-    const onReset = () => {
-        form.resetFields();
-    };
+
+    useEffect(() => {
+        onRideTypeChange("ind")
+
+    }, []);
 
 
     const onRideTypeChange = (value) => {
@@ -122,63 +121,40 @@ const RideForm = data => {
         })
     }
 
-    function clearForm() {
-        form.resetFields()
-    }
+    function readValues() {
+        const added = 'instructor1';
+        const instructorRef = 'instructor1';
 
 
-    function add(ride) {
-        let docr = '06ab6364-40df-422a-be57-b9ad2ff304e6' // reference for rider id
-        ref
-            .doc(docr)
-            .collection('rides')
-            .add(ride)
-            .catch((err) => {
-                console.error(err);
-            });
-        setSuccess(`Dodano  ${ride.total} do bazy danych`)
-        clearForm();
+        // const ride = {
+        //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        //     lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+        //     instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
+        //     added: instructorRef,
+        //     rideType: form.getFieldValue('lungeType'),
+        //     total: form.getFieldValue('total'),
+        //     price: form.getFieldValue('price')
+        //
+        // }
 
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setError('');
-        setTotal(form.getFieldValue('total'))
-
-
-        try {
-            setError("");
-
-            // const added = currentUser ? currentUser.uid : 'unknown';
-            const added = 'instructor1';
-            const instructorRef = 'instructor1';
-
-
-            const ride = {
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
-                instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
-                added: instructorRef,
-                rideType: form.getFieldValue('lungeType'),
-                total: form.getFieldValue('total'),
-                price: form.getFieldValue('price')
-
-            }
-            add(ride);
-
-        } catch (e) {
-            setError("Failed to create an account!")
-            console.log(e)
-        }
+        parentCallback({ createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+            instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
+            added: instructorRef,
+            rideType: form.getFieldValue('lungeType'),
+            total: form.getFieldValue('total'),
+            price: form.getFieldValue('price')})
 
 
     }
+
+
+
 
 
     return (
 
-        <Form {...layout} form={form} name="control-hooks" onSubmit={handleSubmit} onFinish={onFinish}>
+        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish} onValuesChange={readValues}>
 
             {error && <Alert
                 description={error}
@@ -202,6 +178,7 @@ const RideForm = data => {
                 <Select
                     placeholder="Select a option and change input text above"
                     onChange={onRideTypeChange}
+                    defaultValue="ind"
                     allowClear
                 >
                     <Option value="ind">Indywidualna</Option>
@@ -258,17 +235,17 @@ const RideForm = data => {
             >
                 <Input readOnly="true" style={{background: 'lightgrey'}}/>
             </Form.Item>
-            <Form.Item {...tailLayout}>
+            {/*  <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit" onClick={handleSubmit}>
                     Dodaj
                 </Button>
                 <Button htmlType="button" onClick={onReset}>
                     Reset
                 </Button>
-            </Form.Item>
+            </Form.Item>*/}
         </Form>
 
 
     );
 };
-export default RideForm;
+export default AddNewRideForm;

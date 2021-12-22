@@ -43,7 +43,7 @@ function RidersTable({parentCallback}) {
 
     useEffect(() => {
         getAllPatients()
-        setFiltered(list)
+
         document.title = `Riders Table`
     }, [])
 
@@ -72,6 +72,7 @@ function RidersTable({parentCallback}) {
                     items.push(doc.data());
                 });
                 setList(items);
+                setFiltered(items)
                 setLoading(false);
 
             });

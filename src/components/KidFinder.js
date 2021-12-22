@@ -41,6 +41,8 @@ export const KidFinder = ({parentCallback}) => {
 
 
 
+
+
     const callback = (id) => {
         setIdKid(id);
         parentCallback(id)
@@ -52,7 +54,7 @@ export const KidFinder = ({parentCallback}) => {
         <>
             {/*<Title level={5}>Items length: {patients.length}</Title>*/}
             <span>  Choosen rider: {idKid}</span>
-            <RidersTable parentCallback={callback}/>
+            <RidersTable  parentCallback={callback}/>
 
 
 
