@@ -35,42 +35,11 @@ export const KidFinder = ({parentCallback}) => {
 
 
     useEffect(() => {
-
-        getAllPatients()
         console.log(patients)
         // eslint-disable-next-line
     }, []);
 
 
-    const onSearch = value => {
-        getAllPatients()
-        setFiltered(patients.filter((row) => {
-            return row.name.toLowerCase().includes(value.toLowerCase());
-        }));
-    }
-
-
-    function getAllPatients() {
-        setLoading(true);
-        let instructorId = 'instructor1'
-        ref
-            .where('added', '==', instructorId)
-            // .where('tests','array-contains',1)
-            //.where('title', '==', 'School1') // does not need index
-            //.where('score', '<=', 10)    // needs index
-            //.orderBy('owner', 'asc')
-            //.limit(3)
-            .onSnapshot((querySnapshot) => {
-                const items = [];
-                querySnapshot.forEach((doc) => {
-                    items.push(doc.data());
-                });
-                setPatients(items);
-                setLoading(false);
-
-            });
-        console.log(patients.length)
-    }
 
     const callback = (id) => {
         setIdKid(id);
@@ -83,13 +52,8 @@ export const KidFinder = ({parentCallback}) => {
         <>
             {/*<Title level={5}>Items length: {patients.length}</Title>*/}
             <span>  Choosen rider: {idKid}</span>
-            <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 200}}/>
-            <RidersTable data={filtered} parentCallback={callback}/>
+            <RidersTable parentCallback={callback}/>
 
-            {/* eslint-disable-next-line array-callback-return */}
-
-
-            {/*<Button onClick={getPatients}>Find</Button>*/}
 
 
         </>
