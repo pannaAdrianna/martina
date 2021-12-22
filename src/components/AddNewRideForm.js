@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import {
     Form,
     Button,
-    Select, Typography, Input,
+    Select, Typography, Input, Alert,
 } from 'antd';
 import {InputNumber} from "antd/es";
 import {Option} from "antd/es/mentions";
 import Text from "antd/es/typography/Text";
 import firebase from "firebase/compat";
+import {v4 as uuidv4} from "uuid";
 
 const {Title} = Typography;
 
@@ -27,10 +28,12 @@ const tailLayout = {
     },
 };
 
-const RideForm = () => {
+const RideForm = data => {
 
     const [total, setTotal] = useState(0)
     const [form] = Form.useForm();
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const ref = firebase.firestore().collection('rides');
 
@@ -41,13 +44,15 @@ const RideForm = () => {
         // tu dodaj wysyłanie gdzieś -> chyba na serwer
         setTotal(form.getFieldValue('total'))
 
+
+        // tu na serwer
+
         form.resetFields();
     };
 
     const onReset = () => {
         form.resetFields();
     };
-
 
 
     const onRideTypeChange = (value) => {
@@ -117,11 +122,74 @@ const RideForm = () => {
         })
     }
 
+    function clearForm() {
+        form.resetFields()
+    }
+
+
+    function add(ride) {
+        let docr = '06ab6364-40df-422a-be57-b9ad2ff304e6' // reference for rider id
+        ref
+            .doc(docr)
+            .collection('rides')
+            .add(ride)
+            .catch((err) => {
+                console.error(err);
+            });
+        setSuccess(`Dodano  ${ride.total} do bazy danych`)
+        clearForm();
+
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError('');
+        setTotal(form.getFieldValue('total'))
+
+
+        try {
+            setError("");
+
+            // const added = currentUser ? currentUser.uid : 'unknown';
+            const added = 'instructor1';
+            const instructorRef = 'instructor1';
+
+
+            const ride = {
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+                instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
+                added: instructorRef,
+                rideType: form.getFieldValue('lungeType'),
+                total: form.getFieldValue('total'),
+                price: form.getFieldValue('price')
+
+            }
+            add(ride);
+
+        } catch (e) {
+            setError("Failed to create an account!")
+            console.log(e)
+        }
+
+
+    }
+
+
     return (
 
-        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+        <Form {...layout} form={form} name="control-hooks" onSubmit={handleSubmit} onFinish={onFinish}>
 
-
+            {error && <Alert
+                description={error}
+                type="error"
+                showIcon
+            />}
+            {success && <Alert
+                description={success}
+                type="success"
+                showIcon
+            />}
             <Form.Item
                 name="lungeType"
                 label="Typ jazdy"
@@ -191,7 +259,7 @@ const RideForm = () => {
                 <Input readOnly="true" style={{background: 'lightgrey'}}/>
             </Form.Item>
             <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
                     Dodaj
                 </Button>
                 <Button htmlType="button" onClick={onReset}>

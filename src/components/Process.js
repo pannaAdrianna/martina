@@ -62,6 +62,7 @@ const Process = () => {
             <Content style={{span: 10}}>
                 <Space direction="vertical">
                     <span>Process Id: {id}</span>
+                    <span>Process Ride: </span>
                     <Steps current={current}>
                         {steps.map(item => (
                             <Step key={item.title} title={item.title}/>
@@ -82,7 +83,7 @@ const Process = () => {
                                             Next
                                         </Button>
                                         :
-                                        <span>No
+                                        <span>Choose Rider first
                                         </span>
 
                                 )}
