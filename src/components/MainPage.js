@@ -36,11 +36,10 @@ const MainPage = ({children}) => {
 
     return (
 
-        <Layout style={{minHeight: "100vh"}}>
+        <Layout>
             <Sider handleClick={handleMenuClick}/>
-            <Layout>
-                <Content>{components[render]}</Content>
-            </Layout>
+            <Content >{components[render]}</Content>
+
         </Layout>
     )
 }

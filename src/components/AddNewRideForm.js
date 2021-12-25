@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import {
     Form,
     Button,
@@ -34,11 +34,10 @@ const AddNewRideForm = ({parentCallback}) => {
     const [total, setTotal] = useState(0)
     const [form] = Form.useForm();
     const [error, setError] = useState('');
+    const unitNumber= useRef(3)
     const [success, setSuccess] = useState('');
-
-    const ref = firebase.firestore().collection('rides');
-
-
+    const [rideType, setRideType] = useState('indywidualna');
+    firebase.firestore().collection('rides');
     const onFinish = (values) => {
         console.log(values);
         // tu dodaj wysyłanie gdzieś -> chyba na serwer
@@ -49,8 +48,16 @@ const AddNewRideForm = ({parentCallback}) => {
 
 
     useEffect(() => {
-        onRideTypeChange("ind")
+        // onRideTypeChange('ind')
+        form.setFieldsValue({
+            price: 90,
 
+        });
+        form.setFieldsValue({
+            total: form.getFieldValue('price')
+
+        });
+        setRideType('indywidualna')
     }, []);
 
 
@@ -67,6 +74,8 @@ const AddNewRideForm = ({parentCallback}) => {
                     total: form.getFieldValue('price')
 
                 });
+                setRideType('indywidualna')
+                readValues()
                 return;
 
 
@@ -79,6 +88,8 @@ const AddNewRideForm = ({parentCallback}) => {
                     total: form.getFieldValue('price') * 2
 
                 });
+                setRideType('podwójna')
+                readValues()
                 return;
 
 
@@ -91,6 +102,8 @@ const AddNewRideForm = ({parentCallback}) => {
                     total: form.getFieldValue('price')
 
                 });
+                setRideType('lonża')
+                readValues()
                 return;
 
 
@@ -101,12 +114,15 @@ const AddNewRideForm = ({parentCallback}) => {
 
                 });
                 form.setFieldsValue({
-                    total: (3 * (form.getFieldValue('price')))
-                    // total: ((form.getFieldValue('customizeUnit')) * (form.getFieldValue('price')))
+                    // total: (3 * (form.getFieldValue('price')))
+                    total: (unitNumber * (form.getFieldValue('price')))
                 });
-
+                setRideType('zastęp')
+                readValues()
                 return;
-            // updateTotal()
+                // updateTotal()
+                //
+
 
 
         }
@@ -126,30 +142,30 @@ const AddNewRideForm = ({parentCallback}) => {
         const instructorRef = 'instructor1';
 
 
-        // const ride = {
-        //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        //     lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
-        //     instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
-        //     added: instructorRef,
-        //     rideType: form.getFieldValue('lungeType'),
-        //     total: form.getFieldValue('total'),
-        //     price: form.getFieldValue('price')
-        //
-        // }
-
-        parentCallback({ createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      /*  const ride = {
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
             instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
             added: instructorRef,
             rideType: form.getFieldValue('lungeType'),
             total: form.getFieldValue('total'),
-            price: form.getFieldValue('price')})
+            price: form.getFieldValue('price')
+
+        }*/
+
+        parentCallback({
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+            instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
+            added: instructorRef,
+            rideType: rideType,
+            total: form.getFieldValue('total'),
+            price: form.getFieldValue('price')
+        })
+        // parentCallback(ride)
 
 
     }
-
-
-
 
 
     return (
@@ -190,6 +206,7 @@ const AddNewRideForm = ({parentCallback}) => {
             <Form.Item
                 name="price"
                 label="Cena"
+                initialValue={90}
                 rules={[
                     {
                         type: 'number',
@@ -209,16 +226,16 @@ const AddNewRideForm = ({parentCallback}) => {
                         <Form.Item
                             name="customizeUnit"
                             label="Ilość osób w zastępie"
-                            initialValue={3}
                             rules={[
                                 {
                                     type: "number",
                                     min: 3,
+                                    max:5,
                                     required: true,
                                 },
                             ]}
                         >
-                            <InputNumber onChange={updateTotal}/>
+                            <InputNumber ref={unitNumber} onChange={updateTotal}/>
                         </Form.Item>
                     ) : null
                 }
@@ -226,6 +243,7 @@ const AddNewRideForm = ({parentCallback}) => {
             <Form.Item
                 name="total"
                 label="Całościowo:"
+                initialValue={90}
                 rules={[
                     {
                         type: "number",

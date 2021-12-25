@@ -46,7 +46,6 @@ export const KidFinder = ({parentCallback}) => {
     const callback = (id) => {
         setIdKid(id);
         parentCallback(id)
-
     }
 
 

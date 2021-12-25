@@ -7,24 +7,32 @@ import {Layout, Menu} from "antd";
 import React, {Fragment} from "react";
 import {Header} from "antd/es/layout/layout";
 import {NavBar} from "./NavBar";
+import useWindowSize from "./utils/windowSize";
 
 
 function App() {
+    const {width} = useWindowSize();
 
 
     return (
         <div className="App">
 
-            <Router>
-                <AppRoutes>
-                    <Layout>
-                        <Header>
-                            <NavBar/>
-                        </Header>
-                    </Layout>
-                    <Navigate to="/"/>
-                </AppRoutes>
-            </Router>
+
+            <Fragment>
+
+                <Router>
+                    <AppRoutes>
+                        <Layout>
+                            <Header>
+                                <NavBar/>
+                            </Header>
+                        </Layout>
+                        <Navigate to="/"/>
+                    </AppRoutes>
+                </Router>
+
+
+            </Fragment>
         </div>
 
 
