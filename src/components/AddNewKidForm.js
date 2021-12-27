@@ -77,7 +77,8 @@ export const KidForm = () => {
                 instructorRef: firebase.firestore().collection(`instructors`).doc(`${instructorRef}`),
                 kids_rides,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                lastUpdate: firebase.firestore.FieldValue.serverTimestamp()
+                lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+                hasPass: true
             }
             add(newKid);
         } catch (e) {

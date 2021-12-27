@@ -24,7 +24,8 @@ const Process = data => {
     const [tempStat, setStat] = useState(false)
     const navigate = useNavigate()
 
-    const refRides = firebase.firestore().collection('rides');
+
+    const refPayout = firebase.firestore().collection('payout');
 
 
     useEffect(() => {
@@ -45,9 +46,9 @@ const Process = data => {
 
     function add(ride) {
         // reference for rider id
-        refRides
-            .doc(`${id}`).collection(`rides`)
-            .add(ride, {merge: true})
+
+        refPayout
+            .add(ride)
             .catch((err) => {
                 console.error(err);
                 // setError(err);
@@ -59,51 +60,43 @@ const Process = data => {
 
 
     const steps = [
-        {
-            title: 'Wybierz jeźdźca',
-            icon: <UserOutlined/>,
-            content: <KidFinder parentCallback={callbackFromKidFinder}/>,
-        },
-        {
-            title: 'Wybierz typ jazdy',
-            icon: <GiHorseHead/>,
-            content:
-                <AddNewRideForm parentCallback={callbackFromRideForm}/>,
-        },
-        {
-            title: 'Podsumowanie',
-            icon: <UserOutlined/>,
-            content:
-                <div className="site-card-border-less-wrapper">
-                    <Card title="Podsumowanie jazdy">
+            {
+                title: 'Wybierz jeźdźca',
+                icon: <UserOutlined/>,
+                content: <KidFinder parentCallback={callbackFromKidFinder}/>,
+            },
+            {
+                title: 'Wybierz typ jazdy',
+                icon: <GiHorseHead/>,
+                content:
+                    <AddNewRideForm parentCallback={callbackFromRideForm} fromParent={id}/>,
+            },
+            {
+                title: 'Podsumowanie',
+                icon: <UserOutlined/>,
+                content:
+                    <div className="site-card-border-less-wrapper">
+                        <p>Rider name: imię</p>
+                        <p>Rider Id: {id}</p>
+                        <p>Rider price: {ride.price}</p>
+                        <p>Rider total: {ride.total}</p>
+                        <p>Ride type: {ride.rideType}</p>
+                        <p>Czy karnet - zaimplementować</p>
 
-                        <Row>
-                            <Col flex={3}>
-                                <p>Rider name: imię</p>
-                            </Col>
-                            <Col flex={3}>
-                                <p>Rider Id: {id}</p>
-                            </Col>
-                            <Col flex={3}>
-                                <p>Rider price: {ride.price}</p>
-                            </Col>
-                            <Col flex={3}><p>Rider total: {ride.total}</p></Col>
-                            <Col flex={3}><p>Ride type: {ride.rideType}</p></Col>
-                            <Col flex={3}><p>Czy karnet - zaimplementować</p></Col>
+                    </div>
+            },
+            {
+                title: 'Koniec',
+                icon: <UserOutlined/>,
+                content:
+                    <div>
+                        <Title>Dodano do bazy</Title>
 
-                        </Row>
-                    </Card>
-                </div>
-        },
-        {
-            title: 'Koniec',
-            icon: <UserOutlined/>,
-            content: <div>
-                <Title>Dodano do bazy</Title>
-
-            </div>,
-        },
-    ];
+                    </div>,
+            }
+            ,
+        ]
+    ;
 
 
     const next = () => {

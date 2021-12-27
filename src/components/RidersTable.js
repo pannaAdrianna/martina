@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Table, Radio, Divider, Card} from 'antd';
+import React, {Fragment, useEffect, useState} from 'react';
+import {Table, Radio, Divider, Card, Modal, Col} from 'antd';
 
-import PropTypes from "prop-types";
 import Search from "antd/es/input/Search";
 import firebase from "firebase/compat";
-import Modal from "antd/es/modal/Modal";
+
 import useModal from "antd/es/modal/useModal";
-import {ExclamationCircleOutlined} from "@ant-design/icons";
+import PersonalRideTable from "./PersonalRideTable";
+import Row from "antd/es/descriptions/Row";
 
 const columns = [
 
@@ -15,14 +15,20 @@ const columns = [
         dataIndex: 'name',
 
     },
+
     {
         title: 'Nazwisko',
         dataIndex: 'surname',
     },
     {
+        title: 'Tag',
+        dataIndex: 'owner',
+    },
+    {
         title: 'Telefon',
         dataIndex: 'phone',
     },
+
 
 ];
 
@@ -81,49 +87,40 @@ function RidersTable({parentCallback}) {
         console.log(list.length)
     }
 
-    const [modal, contextHolder] = useModal();
-
-    const ReachableContext = React.createContext();
-    const UnreachableContext = React.createContext();
-
-    const config = {
-        title: 'Use Hook!',
-        content: (
-            <>
-                <ReachableContext.Consumer>{name => `Reachable: ${name}!`}</ReachableContext.Consumer>
-                <br/>
-                <UnreachableContext.Consumer>{name => `Unreachable: ${name}!`}</UnreachableContext.Consumer>
-            </>
-        ),
-        onOk() {
-            console.log('OK');
-        },
-    };
+    const {confirm} = Modal
 
 
     function handleClick(record) {
         console.log("event: ", record)
-        Modal.confirm({
+        confirm({
             title: `${record.name} ${record.surname}`,
             // icon: <ExclamationCircleOutlined/>,
-            content: <Card>
-                <p>Imię: {record.name}</p>
-                <p>Nazwisko: {record.surname}</p>
-                <p>Telefon: {record.phone}</p>
-                <p>Czy posiada karnet: T/N</p>
-            </Card>,
+            content:
+                <div style={{width: 'auto'}}>
+                    <Card>
+                        <p>Imię: {record.name}</p>
+                        <p>Nazwisko: {record.surname}</p>
+                        <p>Telefon: {record.phone}</p>
+                        <p>Czy posiada karnet: T/N</p>
+                    </Card>
+                    <Card>
+                        <PersonalRideTable/>
+                    </Card>
+                </div>,
             onOk() {
                 console.log('OK');
             },
             onCancel() {
                 console.log('Cancel');
             },
+            width: "100%", resize: "auto",
+            minWidth: '300',
         });
     }
 
     return (
-        <div>
-            <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 100}}/>
+        <>
+            <Search placeholder="Find Kid by name" onSearch={onSearch} style={{width: 200}}/>
 
 
             <Table
@@ -143,10 +140,9 @@ function RidersTable({parentCallback}) {
                 }}
 
             />
-            {contextHolder}
 
 
-        </div>
+        </>
     );
 };
 

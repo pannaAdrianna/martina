@@ -29,7 +29,7 @@ const tailLayout = {
     },
 };
 
-const AddNewRideForm = ({parentCallback}) => {
+const AddNewRideForm = ({parentCallback, fromParent}) => {
 
     const [total, setTotal] = useState(0)
     const [form] = Form.useForm();
@@ -58,6 +58,7 @@ const AddNewRideForm = ({parentCallback}) => {
 
         });
         setRideType('indywidualna')
+        onRideTypeChange('ind')
     }, []);
 
 
@@ -95,7 +96,7 @@ const AddNewRideForm = ({parentCallback}) => {
 
             case 'lunge':
                 form.setFieldsValue({
-                    price: 50,
+                    price: 55,
                     // total: (form.getFieldValue('price'))
                 });
                 form.setFieldsValue({
@@ -105,6 +106,34 @@ const AddNewRideForm = ({parentCallback}) => {
                 setRideType('lonża')
                 readValues()
                 return;
+
+            case 'lunge6':
+                form.setFieldsValue({
+                    price: 65,
+                    // total: (form.getFieldValue('price'))
+                });
+                form.setFieldsValue({
+                    total: form.getFieldValue('price')
+
+                });
+                setRideType('lonża 6 r.ż.')
+                readValues()
+                return;
+
+
+            case 'basicsLearning':
+                form.setFieldsValue({
+                    price: 50,
+                    // total: (form.getFieldValue('price'))
+                });
+                form.setFieldsValue({
+                    total: form.getFieldValue('price')
+
+                });
+                setRideType('nauka od podstaw')
+                readValues()
+                return;
+
 
 
             case 'unit':
@@ -125,6 +154,7 @@ const AddNewRideForm = ({parentCallback}) => {
 
 
 
+
         }
 
 
@@ -142,6 +172,7 @@ const AddNewRideForm = ({parentCallback}) => {
         const instructorRef = 'instructor1';
 
 
+
       /*  const ride = {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
@@ -153,6 +184,7 @@ const AddNewRideForm = ({parentCallback}) => {
 
         }*/
 
+
         parentCallback({
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
@@ -160,7 +192,9 @@ const AddNewRideForm = ({parentCallback}) => {
             added: instructorRef,
             rideType: rideType,
             total: form.getFieldValue('total'),
-            price: form.getFieldValue('price')
+            price: form.getFieldValue('price'),
+            idKid: fromParent[0].toString(),
+            rideDate: firebase.firestore.FieldValue.serverTimestamp()
         })
         // parentCallback(ride)
 
@@ -199,8 +233,10 @@ const AddNewRideForm = ({parentCallback}) => {
                 >
                     <Option value="ind">Indywidualna</Option>
                     <Option value="doubleInd">Podwójna jazda</Option>
-                    <Option value="lunge">Lonża</Option>
+                    <Option value="lunge">Lonża do 6 lat</Option>
+                    <Option value="lunge6">Lonża od 6 lat</Option>
                     <Option value="unit">Zastęp</Option>
+                    <Option value="basicsLearning">Nauka od podstaw</Option>
                 </Select>
             </Form.Item>
             <Form.Item
@@ -214,7 +250,7 @@ const AddNewRideForm = ({parentCallback}) => {
                     },
                 ]}
             >
-                <Input readOnly="true" style={{background: 'lightgrey'}}/>
+                <Input readOnly={true} style={{background: 'lightgrey'}}/>
             </Form.Item>
 
             <Form.Item
@@ -251,7 +287,7 @@ const AddNewRideForm = ({parentCallback}) => {
                     },
                 ]}
             >
-                <Input readOnly="true" style={{background: 'lightgrey'}}/>
+                <Input readOnly={true} style={{background: 'lightgrey'}}/>
             </Form.Item>
             {/*  <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit" onClick={handleSubmit}>
